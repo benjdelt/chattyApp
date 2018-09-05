@@ -45,14 +45,16 @@ class App extends Component {
         //   content: "Anonymous2 changed their name to NotFunny",
         // },
       ],
-      socket: null,
+      receivedMessages: [],
+      // socket: null,
     }
     this.addMessage = this.addMessage.bind(this);
   }
 
   addMessage = (username, message) => {
+    console.log("AddMessage() called")
     const newMessage = {
-      id: Math.random(),
+      id: "",
       type:"incomingMessage",
       content: message,
       username: username
@@ -60,7 +62,7 @@ class App extends Component {
     const oldMessages = this.state.messages;
     const newMessages = [...oldMessages, newMessage];
     this.setState({messages: newMessages});
-    this.state.socket.send(JSON.stringify(newMessage));
+    this.socket.send(JSON.stringify(newMessage));
   }
 
   componentDidMount() {
@@ -69,21 +71,32 @@ class App extends Component {
     //   console.log("Simulating incoming message");
     //   // Add a new message to the list of messages in the data store
     //   const newMessage = {id: 8, type:"incomingMessage", username: "Michelle", content: "Hello there!"};
-    //   const messages = this.state.messages.concat(newMessage)
+    //   const messages = this.messages.concat(newMessage)
     //   // Update the state of the app component.
-    //   // Calling setState will trigger a call to render() in App and all child components.
+  //   // Calling setState will trigger a call to render() in App and all child components.
     //   this.setState({messages: messages})
     // }, 3000);
     
     const HOST = "localhost";
     const PORT = 3001;
-    this.state.socket = new WebSocket(`ws://${HOST}:${PORT}`);
-    this.state.socket.onerror = ((evt) => {
+    this.socket = new WebSocket(`ws://${HOST}:${PORT}`);
+    this.socket.onerror = ((evt) => {
       console.error("Connection error:", evt);
     })
-    this.state.socket.onopen = ((evt) => {
+    this.socket.onopen = ((evt) => {
       console.log("Connected to server");
-      // this.state.socket.send("Wouhou!");
+
+      this.socket.onmessage =  ((evt) => {
+        let newMessage = JSON.parse(evt.data);
+        const oldReceivedMessages = this.state.receivedMessages;
+        const newReceivedMessages = [...oldReceivedMessages, newMessage];
+        this.setState({receivedMessages: newReceivedMessages}); 
+      })
+
+      
+      
+      
+      
     });
   }
   
@@ -92,7 +105,7 @@ class App extends Component {
     return (
       <div>
         <NavBar />
-        <MessageList messages={this.state.messages}/>
+        <MessageList messages={this.state.receivedMessages}/>
         <ChatBar currentUser={this.state.currentUser} addMessage={this.addMessage}/> 
       </div>
     );
