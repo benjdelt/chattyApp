@@ -28,10 +28,16 @@ function sendNumberOfUsers(num) {
   });
 }
 
+function pickColor() {
+  const colors = ['tomato', 'dodgerblue', 'mediumseagreen', 'orange'];
+  const index = Math.floor(Math.random() * 4);
+  return colors[index];
+}
+
 wss.on('connection', (ws) => {
   console.log('Client connected');
-  
   sendNumberOfUsers({numberOfUsers: wss.clients.size});
+  ws.send(JSON.stringify({color: pickColor()}));
 
 
   ws.on('message', function incoming (data) {
@@ -50,9 +56,12 @@ wss.on('connection', (ws) => {
     
   })
   // Set up a callback for when a client closes the socket. This usually means they closed their browser.
-  ws.on('close', () => console.log('Client disconnected'));
+  ws.on('close', () => {console.log('Client disconnected')
 
-  sendNumberOfUsers({numberOfUsers: wss.clients.size});
+    sendNumberOfUsers({numberOfUsers: wss.clients.size});
+
+  });
+
   
 
 });

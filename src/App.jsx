@@ -23,6 +23,7 @@ class App extends Component {
       ],
       receivedMessages: [],
       numberOfUsers: 0,
+      color: "black",
     }
     this.addMessage = this.addMessage.bind(this);
   }
@@ -32,7 +33,8 @@ class App extends Component {
       id: "",
       type: type,
       content: message,
-      username: username
+      username: username,
+      color: this.state.color,
     }
     const oldMessages = this.state.messages;
     const newMessages = [...oldMessages, newMessage];
@@ -71,8 +73,10 @@ class App extends Component {
           const oldReceivedMessages = this.state.receivedMessages;
           const newReceivedMessages = [...oldReceivedMessages, newMessage];
           this.setState({receivedMessages: newReceivedMessages}); 
-        } else {
+        } else if (newMessage.numberOfUsers) {
           this.setState({numberOfUsers: newMessage.numberOfUsers});
+        } else {
+          this.setState({color: newMessage.color})
         }
       })
      
