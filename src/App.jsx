@@ -22,6 +22,7 @@ class App extends Component {
         // },
       ],
       receivedMessages: [],
+      numberOfUsers: 0,
     }
     this.addMessage = this.addMessage.bind(this);
   }
@@ -65,9 +66,14 @@ class App extends Component {
 
       this.socket.onmessage =  ((evt) => {
         let newMessage = JSON.parse(evt.data);
-        const oldReceivedMessages = this.state.receivedMessages;
-        const newReceivedMessages = [...oldReceivedMessages, newMessage];
-        this.setState({receivedMessages: newReceivedMessages}); 
+
+        if(newMessage.id) {
+          const oldReceivedMessages = this.state.receivedMessages;
+          const newReceivedMessages = [...oldReceivedMessages, newMessage];
+          this.setState({receivedMessages: newReceivedMessages}); 
+        } else {
+          this.setState({numberOfUsers: newMessage.numberOfUsers});
+        }
       })
      
     });
@@ -77,7 +83,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <NavBar />
+        <NavBar numberOfUsers={this.state.numberOfUsers}/>
         <MessageList messages={this.state.receivedMessages}/>
         <ChatBar currentUser={this.state.currentUser} addMessage={this.addMessage}/> 
       </div>
