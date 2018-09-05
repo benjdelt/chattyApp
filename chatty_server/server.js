@@ -26,12 +26,11 @@ wss.on('connection', (ws) => {
     const message = JSON.parse(data);
     message.id = uuidv4();
     console.log(message.id)
-    console.log(`User ${message.username} said ${message.content}`);
+    console.log(`User ${message.username} said ${message.content} with type ${message.type}`);
     wss.clients.forEach(function each(client) {
-      // if (client.readyState === WebSocket.OPEN) {
+      if (client.readyState === WebSocket.OPEN) {
         client.send(JSON.stringify(message));
-        console.log("Not in if...")
-      // }
+      }
     });
 
     

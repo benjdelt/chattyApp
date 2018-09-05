@@ -2,24 +2,55 @@ import React, {Component} from 'react';
 
 class ChatBar extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      oldUser: this.props.currenUser,
+      currentUser: this.props.currentUser,
+    }
+  }
 
-
-  onSubmit = (evt) => {
+  handleChange = (evt) => {
+    this.setState({currentUser: evt.target.value});
+  }
+  
+  onSubmitUser = (evt) => {
     evt.preventDefault();
-    let username = evt.target.elements.chatbarUsername;
+    this.props.addMessage(this.state.currentUser, `${this.state.oldUser || "Anonymous"} changed their name to ${this.state.currentUser}`, "incomingNotification");
+  }
+
+  onSubmitMessage = (evt) => {
+    evt.preventDefault();
+    let username = this.state.currentUser;
+    this.setState({oldUser: username});
     let message = evt.target.elements.chatbarMessage;
-    this.props.addMessage(username.value, message.value);
+    this.props.addMessage(username, message.value, "incomingMessage");
     message.value = "";
-    username.value = "";
+    // username.value = "";
 
   } 
 
   render() {
     return (
         <footer className="chatbar">
-          <form onSubmit={this.onSubmit}>
-            <input className="chatbar-username" placeholder={this.props.currentUser} name="chatbarUsername"/>
-            <input className="chatbar-message" placeholder="Type a message and hit ENTER" name="chatbarMessage" />
+
+          <form onSubmit={this.onSubmitUser}>
+        
+            <input className="chatbar-username"
+            value={this.state.currentUser} 
+            onChange={this.handleChange}
+            placeholder={this.state.currentUser}
+            name="chatbarUsername"
+            />
+            <input type="submit" />
+          </form>
+
+          <form onSubmit={this.onSubmitMessage}>
+            <input 
+            className="chatbar-message" 
+            placeholder="Type a message and hit ENTER" 
+            name="chatbarMessage" 
+            />
             <input type="submit"/>
           </form>
         </footer>
