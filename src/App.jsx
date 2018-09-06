@@ -10,17 +10,7 @@ class App extends Component {
     super();
     this.state = {
       currentUser: 'Anonymous',
-      messages: [
-        // { id: 6,
-        //   type: "incomingMessage",
-        //   content: "This isn't funny. You're not funny",
-        //   username: "nomnom"
-        // },
-        // { id: 7,
-        //   type: "incomingNotification",
-        //   content: "Anonymous2 changed their name to NotFunny",
-        // },
-      ],
+      messages: [],
       receivedMessages: [],
       numberOfUsers: 0,
       color: "black",

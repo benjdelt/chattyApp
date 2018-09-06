@@ -41,6 +41,10 @@
     .message {
       display: flex;
       padding: 5px;
+      img {
+        max-width: 60%;
+        display: block;
+      }
     }
 
     .message.system {
@@ -53,6 +57,7 @@
       overflow: hidden;
       margin: 5px;
       padding: 0 10px;
+      
     }
 
     .message-content {
