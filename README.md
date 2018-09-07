@@ -1,40 +1,29 @@
-React Boilerplate
+ChattyApp
 =====================
 
-A minimal and light dev environment for ReactJS.
+A full stack chat web app built with Node, Express, React, Webpack and Babel. It assigns a random colour to each user upon connection, allows users to change their username and to communicate in real time. It recognizes image urls in messages and displays them as images.
 
-### Usage
+### Final Product
 
-Clone the boilerplate and create your own git repo.
+![](./docs/notification.gif)
 
-```
-git clone git@github.com:lighthouse-labs/react-simple-boilerplate.git
-cd react-simple-boilerplate
-git remote rm origin
-git remote add origin [YOUR NEW REPOSITORY]
-# Manually update your package.json file
-```
+Displays messages and notifications for all connected users on real time.
 
-Install the dependencies and start the server.
+![](./docs/chatty-0.png)
 
-```
-npm install
-npm start
-open http://localhost:3000
-```
+Allows users to post the url of an image
 
-### Static Files
+![](./docs/chatty-1.png)
 
-You can store static files like images, fonts, etc in the `build` folder.
+It recognizes it and displays it as an image
 
-For example, if you copy a file called my_image.png into the build folder you can access it using `http://localhost:3000/build/my_image.png`.
+### Getting Started
 
-### Linting
-
-This boilerplate project includes React ESLint configuration.
-
-```
-npm run lint
+Fork this repository, then clone your fork of this repository.
+Install dependencies using the npm install command.
+Start the web server using the npm start command. The app will be served at http://localhost:3000/.
+In the chatty_server directorym start the websocket server using the npm start command. The web-socket server will run on port 3001.
+Go to http://localhost:3000/ in your browser
 ```
 
 ### Dependencies
@@ -42,4 +31,5 @@ npm run lint
 * React
 * Webpack
 * [babel-loader](https://github.com/babel/babel-loader)
+* [css-loader](https://github.com/webpack-contrib/css-loader)
 * [webpack-dev-server](https://github.com/webpack/webpack-dev-server)

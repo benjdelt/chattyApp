@@ -16,7 +16,10 @@ class ChatBar extends Component {
   
   onSubmitUser = (evt) => {
     evt.preventDefault();
-    this.props.addMessage(this.state.currentUser, `${this.state.oldUser || "Anonymous"} changed their name to ${this.state.currentUser}`, "incomingNotification");
+    if(!this.state.currentUser){
+      this.setState({currentUser: "Anonymous"});
+    }
+    this.props.addMessage(this.state.currentUser, `${this.state.oldUser || "Anonymous"} changed their name to ${this.state.currentUser || "Anonymous"}`, "incomingNotification");
   }
 
   onSubmitMessage = (evt) => {
@@ -26,7 +29,6 @@ class ChatBar extends Component {
     let message = evt.target.elements.chatbarMessage;
     this.props.addMessage(username, message.value, "incomingMessage");
     message.value = "";
-    // username.value = "";
 
   } 
 
@@ -42,7 +44,7 @@ class ChatBar extends Component {
             placeholder={this.state.currentUser}
             name="chatbarUsername"
             />
-            <input type="submit" />
+            <input className="submit" type="submit" />
           </form>
 
           <form onSubmit={this.onSubmitMessage}>
@@ -51,7 +53,7 @@ class ChatBar extends Component {
             placeholder="Type a message and hit ENTER" 
             name="chatbarMessage" 
             />
-            <input type="submit"/>
+            <input className="submit" type="submit"/>
           </form>
         </footer>
     );

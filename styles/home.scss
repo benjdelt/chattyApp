@@ -1,6 +1,8 @@
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,700");
     @import url("https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css");
 
+$primary-color: mediumseagreen;
+
     body {
       background: white;
       color: black;
@@ -10,7 +12,7 @@
     }
 
     .chatbar {
-      background: tomato;
+      background: $primary-color;
       border-top: 1px solid black;
       bottom: 0;
       display: flex;
@@ -18,6 +20,9 @@
       padding: 5px;
       position: fixed;
       right: 0;
+      .submit {
+        visibility: hidden;
+      }
     }
 
     .chatbar-message,
@@ -70,7 +75,7 @@
     }
 
     .navbar {
-      background: tomato;
+      background: $primary-color;
       border-bottom: 1px solid black;
       height: 60px;
       left: 0;
@@ -99,6 +104,6 @@
 
 
 h1 {
-  color: tomato;
+  color: $primary-color;
 }
 

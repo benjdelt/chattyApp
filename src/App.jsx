@@ -2,17 +2,16 @@ import React, {Component} from 'react';
 import NavBar from './Navbar.jsx';
 import ChatBar from './Chatbar.jsx';
 import MessageList from './MessageList.jsx';
-// import { url } from 'inspector';
-
 
 class App extends Component {
+  
   constructor() {
     super();
     this.state = {
-      currentUser: 'Anonymous',
       messages: [],
       receivedMessages: [],
       numberOfUsers: 0,
+      currentUser: 'Anonymous',
       color: "black",
     }
     this.addMessage = this.addMessage.bind(this);
@@ -26,16 +25,21 @@ class App extends Component {
       username: username,
       color: this.state.color,
     }
+    
     const oldMessages = this.state.messages;
     const newMessages = [...oldMessages, newMessage];
+    
     this.setState({
       messages: newMessages,
       currentUser: newMessage.username,
     });
+
     this.socket.send(JSON.stringify(newMessage));
   }
 
   componentDidMount() {
+
+    // Simulated incoming message
     // console.log("componentDidMount <App />");
     // setTimeout(() => {
     //   console.log("Simulating incoming message");
@@ -49,16 +53,19 @@ class App extends Component {
     
     const HOST = "localhost";
     const PORT = 3001;
+
     this.socket = new WebSocket(`ws://${HOST}:${PORT}`);
+
     this.socket.onerror = ((evt) => {
       console.error("Connection error:", evt);
     })
+
     this.socket.onopen = ((evt) => {
       console.log("Connected to server");
 
       this.socket.onmessage =  ((evt) => {
         let newMessage = JSON.parse(evt.data);
-
+        // Deal with data sent from the websocket
         if(newMessage.id) {
           const oldReceivedMessages = this.state.receivedMessages;
           const newReceivedMessages = [...oldReceivedMessages, newMessage];

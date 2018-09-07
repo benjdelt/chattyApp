@@ -39,6 +39,7 @@ wss.on('connection', (ws) => {
   sendNumberOfUsers({numberOfUsers: wss.clients.size});
   ws.send(JSON.stringify({color: pickColor()}));
 
+  // Broadcast number of connected users to every user
 
   ws.on('message', function incoming (data) {
     const message = JSON.parse(data);
