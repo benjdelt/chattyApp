@@ -56,14 +56,14 @@ class App extends Component {
 
     this.socket = new WebSocket(`ws://${HOST}:${PORT}`);
 
-    this.socket.onerror = ((evt) => {
+    this.socket.onerror = (evt => {
       console.error("Connection error:", evt);
     })
 
-    this.socket.onopen = ((evt) => {
+    this.socket.onopen = (evt => {
       console.log("Connected to server");
 
-      this.socket.onmessage =  ((evt) => {
+      this.socket.onmessage =  (evt => {
         let newMessage = JSON.parse(evt.data);
         // Deal with data sent from the websocket
         if(newMessage.id) {
