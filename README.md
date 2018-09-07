@@ -24,7 +24,6 @@ Install dependencies using the npm install command.
 Start the web server using the npm start command. The app will be served at http://localhost:3000/.
 In the chatty_server directorym start the websocket server using the npm start command. The web-socket server will run on port 3001.
 Go to http://localhost:3000/ in your browser
-```
 
 ### Dependencies
 
